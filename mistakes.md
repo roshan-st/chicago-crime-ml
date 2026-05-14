@@ -93,5 +93,9 @@ print(clean_index_df)
 ------------------------------
 Now that you have verified how pandas filters rows and handles indexes, would you like to move on to encoding your variables for the machine learning model, or do you want to explore the relationship plots next?
 
+------------------
+
+Just because i plotted something does not mean necessarily it related if everything i plotted has exactly the same split like 80/20 then ithere is no correlation between it but if for some locations it is higher and osme lower then it si related this relationship is called ARREST RATE.
+
 
 
