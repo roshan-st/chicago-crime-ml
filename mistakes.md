@@ -49,3 +49,49 @@ when u commit u can use two -m -m the first -m means the git name and the second
 
 git commit --amend --no-edit
 
+------------
+
+So a new command i learnt is countplot which basically counts the num of times something happens. 
+
+---------
+
+d=pd.crosstab(df["Primary Type"],df["Arrest"])
+print(d.head())  
+
+CROSSTAB Automatically creates two tables this is used for heatmaps
+-------
+
+I used apply to change the values form str64 to 01234 but that wont work as intended as you cant pass dictionary as a function
+
+
+--------
+You cannot acces a dataset by selecting or putting it as df[0] it has to be sliced df[0:1] so this will select first row and leave the rest or u can use iloc and loc.
+
+-------
+idmax gets the id of the highest value_counts()
+
+
+top_10_locations = df["Location Description"].value_counts().head(10).index
+print(top_10_locations)
+
+# 2. Filter your dataframe to keep ONLY those 10 locations
+filtered_location_df = df[df["Location Description"].isin(top_10_locations)]
+print(filtered_location_df["Location Description"].value_counts())
+print(filtered_location_df) 
+
+---------------
+Q: Why does my filtered DataFrame still show an index of 7999 and look like it has 8,000 rows even after running df[df["Location Description"].isin(top_10_locations)]?
+A: Your filter is working perfectly, but pandas preserves the original index labels of the rows when it filters data. It does not automatically renumber them from 0.
+If row 7996 was a location outside your top 10 (like "AIRCRAFT"), pandas dropped it. If row 7999 was inside your top 10 (like "RESIDENCE"), pandas kept it and left its label as 7999. The presence of 7999 at the bottom just means the last row of your original dataset passed the filter, not that you still have 8,000 rows.
+To see the actual number of remaining rows and reset the numbering cleanly, use:
+
+# Check the true number of rows remaining
+print("Actual rows remaining:", len(filtered_location_df))
+# Reset the index numbering so it starts from 0 with no gapsclean_index_df = filtered_location_df.reset_index(drop=True)
+print(clean_index_df)
+
+------------------------------
+Now that you have verified how pandas filters rows and handles indexes, would you like to move on to encoding your variables for the machine learning model, or do you want to explore the relationship plots next?
+
+
+
