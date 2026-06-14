@@ -41,7 +41,7 @@ Some other important data to notice is the graphs we plotted about the Chcicago 
 1.Num of Arrests vs Non Arests 
 ![alt text](image-5.png)
 2.Which crime has higher tendency to be caught
-![alt text](image-6.png)
+![alt text](image-3.png)
 3.Relationship between time ot day and arrest
 ![alt text](image-7.png)
 4.Relation between month and arreest
