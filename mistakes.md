@@ -97,5 +97,43 @@ Now that you have verified how pandas filters rows and handles indexes, would yo
 
 Just because i plotted something does not mean necessarily it related if everything i plotted has exactly the same split like 80/20 then ithere is no correlation between it but if for some locations it is higher and osme lower then it si related this relationship is called ARREST RATE.
 
+-----------------------
+
+
+This took a lot of time to understand but this is the breakdown for ONEHOTENCODER in my opinion a very important unbiased categoral classifier 
+The first step is to get which datatype is non numerical because with numrical we can do SIMPLEIMIPUTER which is mroe accurate but for everything else using ONEHOT ENCODER. 
+
+Now we get it by checking the dtypes.Keep in mind it returns a NUMPY ARRAY so we convert it to pd.DataFrame 
+
+Also when converting to dataframe the columns=OH_encoder.get_feature_names_out automatically knows the different categories and makes it that  way. You s et the index also since it sa numpy array.
+
+# FIX 1: Check for "object" data type so your column list is not empty
+s = (X_train.dtypes == "object") | (X_train.dtypes == "string")
+object_cols = list(s[s].index)
+
+object_colss = ["Date", "Case Number", "Location Description", "Updated On"]
+object_cols = [col for col in object_cols if col not in object_colss]
+
+# 2. One-Hot Encode
+OH_encoder = OneHotEncoder(handle_unknown="ignore", sparse_output=False)
+OH_cols_train = OH_encoder.fit_transform(X_train[object_cols])
+OH_cols_test = OH_encoder.transform(X_test[object_cols])
+
+# FIX 2: Convert NumPy arrays to DataFrames and match the original row indexes
+OH_cols_train_df = pd.DataFrame(OH_cols_train, columns=OH_encoder.get_feature_names_out(object_cols), index=X_train.index)
+OH_cols_test_df = pd.DataFrame(OH_cols_test, columns=OH_encoder.get_feature_names_out(object_cols), index=X_test.index)
+
+# FIX 3: Drop BOTH the encoded columns AND the ignored text columns from the numeric data
+num_X_train = X_train.drop(object_cols + object_colss, axis=1)
+num_X_test = X_test.drop(object_cols + object_colss, axis=1)
+
+# 4. Concatenate your DataFrames cleanly
+X_train_final = pd.concat([num_X_train, OH_cols_train_df], axis=1)
+X_test_final = pd.concat([num_X_test, OH_cols_test_df], axis=1)
+
+# FIX 4: Convert all column names to strings so RandomForest doesn't throw a type error
+X_train_final.columns = X_train_final.columns.astype(str)
+X_test_final.columns = X_test_final.columns.astype(str)
+
 
 
